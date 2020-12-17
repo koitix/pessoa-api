@@ -53,6 +53,19 @@ public class PessoaController {
 		return pessoaRepositorio.buscarPorNome(pageable,nome);
 	}
 	
+	@GetMapping(value="/buscar-nome")
+	@ApiOperation(value="Retorna uma pessoa filtrada por nome")
+	public Pessoa buscarPorNome(String nome) {
+		return pessoaRepositorio.buscarPorNome(nome);
+	}
+	
+
+	@GetMapping(value="/buscar-cpf")
+	@ApiOperation(value="Retorna uma pessoa filtrada por cpf")
+	public Pessoa buscarPorCPF(String cpf) {
+		return pessoaRepositorio.buscarPorCPF(cpf);
+	}
+	
 	@GetMapping(value="/listar-cpf")
 	@ApiOperation(value="Retorna lista filtrada por cpf")
 	public Page<Pessoa> listaPorCPF(Pageable pageable,String cpf) {
@@ -72,7 +85,7 @@ public class PessoaController {
 	}
 		
 	@PutMapping("/{id}")
-	@ApiOperation(value="Retorna uma pessoa pelo id")
+	@ApiOperation(value="Atualiza uma pessoa pelo id")
 	public ResponseEntity<Pessoa> alterarPessoa(@PathVariable Long id, @RequestBody Pessoa pessoa) {
 		Pessoa pessoaExistente = pessoaRepositorio.findById(id).get();
 		if(pessoaExistente == null ) {
@@ -104,7 +117,7 @@ public class PessoaController {
  
 	
 	@GetMapping(path= "/{id}")
-	@ApiOperation(value="Atualiza uma pessoa")
+	@ApiOperation(value="Busca uma pessoa")
 	public ResponseEntity<Pessoa> buscarPessoa(@PathVariable(name="id") Long id) {
 		Pessoa pessoaExistente = pessoaRepositorio.findById(id).get();
 		if(pessoaExistente == null ) {
