@@ -1,5 +1,7 @@
 package com.group.controller;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.BeanUtils;
@@ -45,6 +47,11 @@ public class PessoaController {
 	@ApiOperation(value="Retorna lista geral de Pessoas")
 	public 	Page<Pessoa> ListarPessoas(Pageable pageable) {
 		return pessoaRepositorio.findAll(pageable);
+	}
+	
+	@GetMapping(value="/listar-todos")
+	public 	List<Pessoa> ListarTodos() {
+		return pessoaRepositorio.listarTodos();
 	}
 	
 	@GetMapping(value="/listar-nome")

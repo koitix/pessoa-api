@@ -1,5 +1,7 @@
 package com.group.repositorio;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -15,6 +17,9 @@ public interface PessoaRepositorio extends  PagingAndSortingRepository<Pessoa, L
 	
 	@Query("select pessoa from Pessoa pessoa where nome = :nome")
 	Page<Pessoa> buscarPorNome(Pageable pageable, @Param("nome") String nome);
+	
+	@Query("select pessoa from Pessoa pessoa")
+	List<Pessoa> listarTodos();
 	
 	@Query("select pessoa from Pessoa pessoa where nome = :nome")
 	Pessoa buscarPorNome(@Param("nome") String nome);
