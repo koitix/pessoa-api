@@ -23,6 +23,8 @@ import com.group.model.Pessoa;
 import com.group.repositorio.ContatoRepositorio;
 import com.group.repositorio.PessoaRepositorio;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/contatos")
 public class ContatoController {
@@ -33,6 +35,7 @@ public class ContatoController {
 	private PessoaRepositorio pessoaRepositorio;
 	
 	 @PostMapping
+		@ApiOperation(value="Adiciona novo Contato")
 	    public ResponseEntity<Contato> create(@RequestBody @Valid Contato contato) {
 	        Optional<Pessoa> pessoa = pessoaRepositorio.findById(contato.getPessoa().getId());
 	        if (!pessoa.isPresent()) {
@@ -50,6 +53,7 @@ public class ContatoController {
 	
 	 
 	 @PutMapping("/{id}")
+		@ApiOperation(value="Atualiza um Contato")
 	    public ResponseEntity<Contato> update(@RequestBody @Valid Contato Contato, @PathVariable Long id) {
 	        Optional<Pessoa> pessoa = pessoaRepositorio.findById(Contato.getPessoa().getId());
 	        if (!pessoa.isPresent()) {
@@ -70,6 +74,7 @@ public class ContatoController {
 	 
 	 
 	 @DeleteMapping("/{id}")
+		@ApiOperation(value="Remove um Contato pelo id")
 	    public ResponseEntity<Contato> delete(@PathVariable Long id) {
 	        Optional<Contato> contato = contatoRepositorio.findById(id);
 	        if (!contato.isPresent()) {
@@ -82,11 +87,13 @@ public class ContatoController {
 	    }
 	 
 		@GetMapping
+		@ApiOperation(value="Retorna lista geral de Contatos")
 		public 	List<Contato> listarContatos() {
 			return contatoRepositorio.findAll();
 		}
 	 
 	 @GetMapping("/{id}")
+		@ApiOperation(value="Retorna um contato pelo id")
 	    public ResponseEntity<Contato> getById(@PathVariable Long id) {
 	        Optional<Contato> contato = contatoRepositorio.findById(id);
 	        if (!contato.isPresent()) {
@@ -97,16 +104,4 @@ public class ContatoController {
 	    }
 	 
 	 
-//	
-//    @PostMapping("/pessoas/{id_pessoa}/contatos")
-//    public Contato adicionarContato(@PathVariable (value = "id_pessoa") Long id_pessoa,@Valid @RequestBody Contato contato) {
-//        Pessoa existe = pessoaRepositorio.findById(id_pessoa).get();
-//        contato.setPessoa(existe); 
-//        return contatoRepositorio.save(contato);
-//    }
-//    
-//	
-    
-
-	
 }

@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
 
@@ -21,6 +22,7 @@ import org.hibernate.validator.constraints.br.CPF;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Table(name="Pessoa")
 public class Pessoa {
 
 	@Id // Id Annotation
@@ -38,7 +40,7 @@ public class Pessoa {
 	private Date data_nascimento;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name ="contato_id",referencedColumnName ="id")
+	@JoinColumn(name ="id_pessoa",referencedColumnName ="id")
 	private List<Contato> contato = new ArrayList<>();
 	  
 

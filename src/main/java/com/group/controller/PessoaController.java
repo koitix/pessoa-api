@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,8 +24,13 @@ import com.group.model.Pessoa;
 import com.group.repositorio.ContatoRepositorio;
 import com.group.repositorio.PessoaRepositorio;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/pessoas")
+@Api(value ="Pessoas Api Rest")
+@CrossOrigin(origins="*")
 public class PessoaController {
 
 	@Autowired
@@ -36,22 +42,26 @@ public class PessoaController {
 
 	
 	@GetMapping
+	@ApiOperation(value="Retorna lista geral de Pessoas")
 	public 	Page<Pessoa> ListarPessoas(Pageable pageable) {
 		return pessoaRepositorio.findAll(pageable);
 	}
 	
 	@GetMapping(value="/listar-nome")
+	@ApiOperation(value="Retorna lista filtrada por nome")
 	public Page<Pessoa> listarPorNome(Pageable pageable,String nome) {
 		return pessoaRepositorio.buscarPorNome(pageable,nome);
 	}
 	
 	@GetMapping(value="/listar-cpf")
+	@ApiOperation(value="Retorna lista filtrada por cpf")
 	public Page<Pessoa> listaPorCPF(Pageable pageable,String cpf) {
 		return pessoaRepositorio.buscarPorCPF(pageable, cpf);
 	}
 			
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
+	@ApiOperation(value="Adiciona nova Pessoa")
 	public ResponseEntity<Pessoa> adicionarPessoa(@Validated @RequestBody Pessoa pessoa) {
 		
 		if( pessoa.getContato().size() ==0) {
@@ -62,6 +72,7 @@ public class PessoaController {
 	}
 		
 	@PutMapping("/{id}")
+	@ApiOperation(value="Retorna uma pessoa pelo id")
 	public ResponseEntity<Pessoa> alterarPessoa(@PathVariable Long id, @RequestBody Pessoa pessoa) {
 		Pessoa pessoaExistente = pessoaRepositorio.findById(id).get();
 		if(pessoaExistente == null ) {
@@ -76,6 +87,7 @@ public class PessoaController {
 	}
 	
 	@DeleteMapping(path= "/{id}")
+	@ApiOperation(value="Remove uma pessoa pelo id")
 	public ResponseEntity<Void> deletarPessoa(@PathVariable(name="id") Long id ){
 		Pessoa pessoaExistente = pessoaRepositorio.findById(id).get();
 		
@@ -92,6 +104,7 @@ public class PessoaController {
  
 	
 	@GetMapping(path= "/{id}")
+	@ApiOperation(value="Atualiza uma pessoa")
 	public ResponseEntity<Pessoa> buscarPessoa(@PathVariable(name="id") Long id) {
 		Pessoa pessoaExistente = pessoaRepositorio.findById(id).get();
 		if(pessoaExistente == null ) {
