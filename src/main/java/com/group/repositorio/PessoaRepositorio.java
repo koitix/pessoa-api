@@ -16,7 +16,13 @@ public interface PessoaRepositorio extends  PagingAndSortingRepository<Pessoa, L
 	@Query("select pessoa from Pessoa pessoa where nome = :nome")
 	Page<Pessoa> buscarPorNome(Pageable pageable, @Param("nome") String nome);
 	
+	@Query("select pessoa from Pessoa pessoa where nome = :nome")
+	Pessoa buscarPorNome(@Param("nome") String nome);
+	
 	@Query("select pessoa from Pessoa pessoa where cpf = :cpf")
 	Page<Pessoa> buscarPorCPF(Pageable pageable, @Param("cpf") String cpf);
+	
+	@Query("select pessoa from Pessoa pessoa where cpf = :cpf")
+	Pessoa buscarPorCPF(@Param("cpf") String cpf);
 	
 }
