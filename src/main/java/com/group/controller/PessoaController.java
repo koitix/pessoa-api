@@ -50,6 +50,7 @@ public class PessoaController {
 	}
 	
 	@GetMapping(value="/listar-todos")
+	@ApiOperation(value="Retorna lista de todos")
 	public 	List<Pessoa> ListarTodos() {
 		return pessoaRepositorio.listarTodos();
 	}
@@ -88,6 +89,14 @@ public class PessoaController {
 			return ResponseEntity.notFound().build();
 		}
 		 pessoaRepositorio.save(pessoa);
+		return ResponseEntity.ok(pessoa);
+	}
+	
+	@PostMapping(value="/sem-contrato")
+	@ResponseStatus(HttpStatus.CREATED)
+	@ApiOperation(value="Adiciona nova Pessoa sem Contato")
+	public ResponseEntity<Pessoa> adicionarPessoaSemContato(@Validated @RequestBody Pessoa pessoa) {
+		pessoaRepositorio.save(pessoa);
 		return ResponseEntity.ok(pessoa);
 	}
 		
